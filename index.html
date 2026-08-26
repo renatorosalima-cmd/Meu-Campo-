@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Forçar esquema de cores claro no navegador e WebView -->
+    <!-- Meta tags para bloquear modo escuro automático -->
     <meta name="color-scheme" content="light">
     <meta name="supported-color-schemes" content="light">
     
@@ -14,9 +14,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Desativa o escurecimento forçado por navegadores e Android */
-        :root {
+        /* Desativa escurecimento e inversão forçada de cores no Android/Chrome */
+        :root, html, body {
             color-scheme: light !important;
+            supported-color-schemes: light !important;
+            forced-color-adjust: none !important;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #f1f5f9 !important;
+            color: #1e293b !important;
+        }
+
+        /* Força fundo branco nos cards principais e modais */
+        .bg-white {
+            background-color: #ffffff !important;
+            color: #1e293b !important;
+        }
+
+        /* Garante que inputs e selects permaneçam claros */
+        input, select, textarea {
+            color-scheme: light !important;
+            background-color: #ffffff !important;
+            color: #0f172a !important;
         }
 
         /* Barra de Gradiente de Cores */
@@ -26,17 +47,10 @@
                 #00ff00 42%, #00ffff 57%, #0000ff 71%, 
                 #8b00ff 85%, #ff0000 100%);
         }
-
-        /* Garante que elementos de entrada mantenham o fundo claro original */
-        input, select, textarea {
-            color-scheme: light !important;
-            background-color: #ffffff !important;
-            color: #0f172a !important;
-        }
     </style> 
     <link rel="manifest" href="manifest.json">
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center justify-between p-4" style="color-scheme: light; background-color: #f1f5f9; color: #1e293b;">
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center justify-between p-4">
 
     <!-- Container Principal do App -->
     <div id="paginaInicial" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col mb-4">
