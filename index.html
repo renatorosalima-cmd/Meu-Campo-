@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="force-light-mode">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Meta Tags para desativar engines de escurecimento web -->
-    <meta name="color-scheme" content="only light">
+    <!-- Meta Tags estritas para travar o tema Light no navegador -->
+    <meta name="color-scheme" content="light">
     <meta name="supported-color-schemes" content="light">
-    <meta name="darkmode" content="off">
     <meta name="theme-color" content="#ffffff">
     
     <title>Meu Campo - Testemunhas de Jeová</title>
@@ -17,48 +16,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* DUPLA INVERSÃO: Inverte a tela via CSS para que a inversão da GPU do Android devolva o app ao estado normal */
-        html.force-light-mode {
-            filter: invert(1) hue-rotate(180deg) !important;
-            -webkit-filter: invert(1) hue-rotate(180deg) !important;
-            background-color: #000000 !important;
+        /* Trava nativa para garantir que o navegador trate a página estritamente como Light */
+        :root {
+            color-scheme: light !important;
         }
 
-        /* Desinverte imagens, ícones e mídias para não alterá-los caso haja carregamento */
-        html.force-light-mode img,
-        html.force-light-mode video,
-        html.force-light-mode iframe,
-        html.force-light-mode .no-invert {
-            filter: invert(1) hue-rotate(180deg) !important;
-            -webkit-filter: invert(1) hue-rotate(180deg) !important;
-        }
-
-        /* Força fundo branco nativo nos containers do app */
-        body {
+        html, body {
             background-color: #ffffff !important;
             color: #0f172a !important;
         }
 
-        /* Proteção para os cartões e fundos */
-        #paginaInicial, #telaPersonalizacao, #telaSobre, #modalDia, .bg-white {
+        /* Bloqueio de renderização do Dark Mode via Force-Color do Android */
+        @media (prefers-color-scheme: dark) {
+            html {
+                background-color: #ffffff !important;
+                color: #0f172a !important;
+            }
+        }
+
+        /* Estilização limpa para inputs e selects */
+        input, select {
             background-color: #ffffff !important;
             color: #0f172a !important;
-        }
-
-        .bg-slate-50 {
-            background-color: #f8fafc !important;
-        }
-
-        /* Trava de contraste e preenchimento de texto */
-        .text-slate-400 { color: #94a3b8 !important; -webkit-text-fill-color: #94a3b8 !important; }
-        .text-slate-500 { color: #64748b !important; -webkit-text-fill-color: #64748b !important; }
-        .text-slate-600 { color: #475569 !important; -webkit-text-fill-color: #475569 !important; }
-        .text-slate-700 { color: #334155 !important; -webkit-text-fill-color: #334155 !important; }
-        .text-slate-800, .text-slate-900 { color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; }
-
-        #totalPub, #totalVid, #totalRev {
-            color: #0f172a !important;
-            -webkit-text-fill-color: #0f172a !important;
         }
 
         /* Gradiente da Barra de Personalização */
