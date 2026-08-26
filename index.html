@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" style="color-scheme: light !important;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Meta tags para bloquear modo escuro automático -->
-    <meta name="color-scheme" content="light">
+    
+    <!-- Meta tags reforçadas para bloquear a engine de escurecimento do Chromium/Safari -->
+    <meta name="color-scheme" content="light only">
     <meta name="supported-color-schemes" content="light">
+    <meta name="darkmode" content="off">
     
     <title>Meu Campo - Testemunhas de Jeová</title>
     
@@ -14,33 +16,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Desativa escurecimento e inversão forçada de cores no Android/Chrome */
+        /* Anula o filtro de inversão de cores e o Auto-Darkmode do WebView/Android */
         :root, html, body {
             color-scheme: light !important;
             supported-color-schemes: light !important;
             forced-color-adjust: none !important;
-            -webkit-font-smoothing: antialiased;
+            -webkit-forced-color-adjust: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
         }
 
+        /* Hack de imagem 1x1 pixel branca para impedir o navegador de forçar fundo escuro */
         body {
             background-color: #f1f5f9 !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23f1f5f9'/%3E%3C/svg%3E") !important;
+            background-repeat: repeat !important;
             color: #1e293b !important;
         }
 
-        /* Força fundo branco nos cards principais e modais */
-        .bg-white {
+        /* Garante que os cards recebam imagem de fundo branca se o CSS falhar */
+        .bg-white, #paginaInicial, #telaPersonalizacao, #telaSobre, #modalDia > div, main {
             background-color: #ffffff !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23ffffff'/%3E%3C/svg%3E") !important;
+            background-repeat: repeat !important;
             color: #1e293b !important;
         }
 
-        /* Garante que inputs e selects permaneçam claros */
+        /* Mantém o texto escuro em todos os elementos da página */
+        p, span, h1, h2, h3, h4, label, div {
+            -webkit-text-fill-color: initial;
+        }
+
+        /* Trava os inputs com fundo claro */
         input, select, textarea {
             color-scheme: light !important;
             background-color: #ffffff !important;
             color: #0f172a !important;
         }
 
-        /* Barra de Gradiente de Cores */
+        /* Barra de Gradiente */
         .gradient-bar {
             background: linear-gradient(to right, 
                 #ff0000 0%, #ff7f00 14%, #ffff00 28%, 
@@ -446,6 +460,9 @@
 
     <!-- Script de Lógica -->
     <script>
+        // Força a remoção de qualquer classe dark inserida dinamicamente
+        document.documentElement.classList.remove('dark');
+
         const paletasPadrao = {
             teal: { principal: '#0f766e', texto: '#0f766e', fundo: '#f0fdf4' },
             blue: { principal: '#1d4ed8', texto: '#1d4ed8', fundo: '#eff6ff' },
