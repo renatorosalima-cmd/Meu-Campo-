@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Força o navegador a reconhecer apenas a versão Light do app -->
+    <meta name="color-scheme" content="only light">
+    <meta name="supported-color-schemes" content="light">
+    <meta name="theme-color" content="#ffffff">
+    
     <title>Meu Campo - Testemunhas de Jeová</title>
     
     <!-- Tailwind CSS -->
@@ -10,31 +16,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Fundo 100% Branco e Alto Contraste */
+        /* Bloqueio de inversão de cores e controle de temas */
         :root {
-            color-scheme: light dark;
+            color-scheme: light !important;
+            supported-color-schemes: light !important;
         }
 
-        body {
+        html, body {
             background-color: #ffffff !important;
+            background: #ffffff !important;
             color: #0f172a !important;
         }
 
-        .bg-slate-100 {
+        /* Força fundo branco nos containers principais */
+        #paginaInicial, #telaPersonalizacao, #telaSobre, .bg-white, .bg-slate-100 {
             background-color: #ffffff !important;
+            background: #ffffff !important;
         }
 
-        /* Garantia de contraste nos textos dos cards */
+        /* Garantia de alto contraste para os textos */
         .text-slate-400 { color: #64748b !important; }
         .text-slate-500 { color: #475569 !important; }
         .text-slate-600 { color: #334155 !important; }
         .text-slate-700 { color: #334155 !important; }
         .text-slate-800 { color: #0f172a !important; }
-
-        .bg-white {
-            background-color: #ffffff !important;
-            color: #0f172a !important;
-        }
 
         #totalPub, #totalVid, #totalRev {
             color: #0f172a !important;
