@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Meta Tags estritas para travar o tema Light no navegador -->
+    <!-- Forçar esquema de cores claro no navegador e WebView -->
     <meta name="color-scheme" content="light">
     <meta name="supported-color-schemes" content="light">
-    <meta name="theme-color" content="#ffffff">
     
     <title>Meu Campo - Testemunhas de Jeová</title>
     
@@ -16,44 +14,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Trava nativa para garantir que o navegador trate a página estritamente como Light */
+        /* Desativa o escurecimento forçado por navegadores e Android */
         :root {
             color-scheme: light !important;
         }
 
-        html, body {
-            background-color: #ffffff !important;
-            color: #0f172a !important;
-        }
-
-        /* Bloqueio de renderização do Dark Mode via Force-Color do Android */
-        @media (prefers-color-scheme: dark) {
-            html {
-                background-color: #ffffff !important;
-                color: #0f172a !important;
-            }
-        }
-
-        /* Estilização limpa para inputs e selects */
-        input, select {
-            background-color: #ffffff !important;
-            color: #0f172a !important;
-        }
-
-        /* Gradiente da Barra de Personalização */
+        /* Barra de Gradiente de Cores */
         .gradient-bar {
             background: linear-gradient(to right, 
                 #ff0000 0%, #ff7f00 14%, #ffff00 28%, 
                 #00ff00 42%, #00ffff 57%, #0000ff 71%, 
                 #8b00ff 85%, #ff0000 100%);
         }
+
+        /* Garante que elementos de entrada mantenham o fundo claro original */
+        input, select, textarea {
+            color-scheme: light !important;
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+        }
     </style> 
     <link rel="manifest" href="manifest.json">
 </head>
-<body class="bg-white text-slate-800 min-h-screen flex flex-col items-center justify-between p-4">
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center justify-between p-4" style="color-scheme: light; background-color: #f1f5f9; color: #1e293b;">
 
     <!-- Container Principal do App -->
-    <div id="paginaInicial" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col mb-4 border border-slate-200">
+    <div id="paginaInicial" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col mb-4">
         
         <!-- Cabeçalho -->
         <header id="appHeader" class="bg-teal-700 text-white p-5 text-center transition-colors">
@@ -72,13 +58,14 @@
         <!-- Corpo do App -->
         <main class="p-5 flex flex-col gap-5 bg-white">
 
-            <!-- Perfil e Seleção de Data -->
+            <!-- Identificação do Publicador, Congregação, Circuito, Meta e Seletor de Mês/Ano -->
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
                 <div>
                     <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase">Nome do Publicador</label>
                     <input type="text" id="inputNome" placeholder="Seu nome" oninput="salvarDadosPerfil()" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
                 </div>
 
+                <!-- Congregação e Circuito -->
                 <div class="grid grid-cols-2 gap-2">
                     <div>
                         <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase">Congregação</label>
@@ -90,6 +77,7 @@
                     </div>
                 </div>
 
+                <!-- Meta e Seletores de Mês e Ano -->
                 <div class="flex flex-col gap-2">
                     <div>
                         <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase">Meta de Serviço</label>
@@ -123,13 +111,14 @@
                         <div>
                             <label class="block text-xs font-semibold text-slate-500 mb-1 uppercase">Ano</label>
                             <select id="selectAno" onchange="mudarDataSelecionada()" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 font-medium text-teal-800">
+                                <!-- Preenchido via JS -->
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Cronômetro -->
+            <!-- Bloco do Cronômetro Rápido -->
             <div id="cardCronometro" class="bg-teal-50 border border-teal-100 rounded-xl p-4 text-center shadow-inner transition-colors">
                 <div class="flex flex-col items-center gap-0.5">
                     <span id="subtituloCronometro" class="text-xs text-teal-600 font-semibold uppercase tracking-wide">Cronômetro Geral</span>
@@ -141,7 +130,7 @@
                 </button>
             </div>
 
-            <!-- Resumo de Horas -->
+            <!-- Resumo de Horas Acumuladas e Progresso da Meta -->
             <div class="bg-white border border-slate-200 rounded-xl p-4 flex flex-col gap-3 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -155,9 +144,11 @@
                     </div>
                     <div id="porcentagemMeta" class="text-sm font-bold text-teal-600"></div>
                 </div>
+                <!-- Barra de Progresso -->
                 <div id="containerBarraMeta" class="hidden w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
                     <div id="barraProgresso" class="bg-teal-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
                 </div>
+                <!-- Mensagem de Meta Concluída -->
                 <div id="mensagemMetaConcluida" class="hidden bg-emerald-50 border border-emerald-200 text-emerald-800 p-2.5 rounded-lg text-center animate-bounce mt-1">
                     <p class="text-xs font-bold flex items-center justify-center gap-1.5">
                         <i class="fa-solid fa-circle-check text-emerald-600"></i>
@@ -167,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- Calendário -->
+            <!-- CALENDÁRIO DIÁRIO -->
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
                 <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                     <div class="flex items-center gap-1.5">
@@ -177,25 +168,29 @@
                     </div>
                     <span class="text-[10px] text-slate-400">Clique para editar</span>
                 </div>
-                <div id="gridCalendarioDias" class="grid grid-cols-7 gap-1.5 max-h-56 overflow-y-auto pr-1 pt-1"></div>
+                <!-- Grade de dias do mês -->
+                <div id="gridCalendarioDias" class="grid grid-cols-7 gap-1.5 max-h-56 overflow-y-auto pr-1 pt-1">
+                    <!-- Preenchido via JavaScript -->
+                </div>
             </div>
 
-            <!-- Totais do Mês -->
+            <!-- Totais Consolidados -->
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-2">
                 <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider mb-1"><i id="iconeGrafico" class="fa-solid fa-chart-pie text-teal-600 mr-1"></i> Totais do Mês</h3>
                 <div class="grid grid-cols-2 gap-2 text-sm">
                     <div class="bg-white p-2.5 rounded-lg border border-slate-200 flex justify-between items-center">
-                        <span class="text-slate-700 text-xs font-medium"><i id="iconePub" class="fa-solid fa-book-open text-teal-600 mr-1"></i> Publicações</span>
-                        <span id="totalPub" class="font-bold text-slate-900">0</span>
+                        <span class="text-slate-500 text-xs"><i id="iconePub" class="fa-solid fa-book-open text-teal-600 mr-1"></i> Publicações</span>
+                        <span id="totalPub" class="font-bold">0</span>
                     </div>
                     <div class="bg-white p-2.5 rounded-lg border border-slate-200 flex justify-between items-center">
-                        <span class="text-slate-700 text-xs font-medium"><i id="iconeVid" class="fa-solid fa-video text-teal-600 mr-1"></i> Vídeos</span>
-                        <span id="totalVid" class="font-bold text-slate-900">0</span>
+                        <span class="text-slate-500 text-xs"><i id="iconeVid" class="fa-solid fa-video text-teal-600 mr-1"></i> Vídeos</span>
+                        <span id="totalVid" class="font-bold">0</span>
                     </div>
                     <div class="bg-white p-2.5 rounded-lg border border-slate-200 flex justify-between items-center">
-                        <span class="text-slate-700 text-xs font-medium"><i id="iconeRev" class="fa-solid fa-rotate-right text-teal-600 mr-1"></i> Revisitas</span>
-                        <span id="totalRev" class="font-bold text-slate-900">0</span>
+                        <span class="text-slate-500 text-xs"><i id="iconeRev" class="fa-solid fa-rotate-right text-teal-600 mr-1"></i> Revisitas</span>
+                        <span id="totalRev" class="font-bold">0</span>
                     </div>
+                    <!-- Estudos Ativos -->
                     <div id="boxEstudos" class="bg-white p-2 rounded-lg border border-teal-200 flex justify-between items-center bg-teal-50/50">
                         <span class="text-slate-700 text-xs font-semibold"><i id="iconeEstudos" class="fa-solid fa-users text-teal-600 mr-1"></i> Estudos Ativos</span>
                         <input type="number" id="inputEstudosAtivos" min="0" oninput="salvarEstudosAtivos()" class="w-12 bg-white border border-teal-300 rounded px-1.5 py-0.5 text-center text-xs font-bold text-teal-800 focus:outline-none focus:ring-1 focus:ring-teal-500" value="0">
@@ -203,7 +198,7 @@
                 </div>
             </div>
 
-            <!-- Botões Inferiores -->
+            <!-- BOTÕES DE OPÇÕES DO MENU INFERIOR -->
             <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
                 <button onclick="abrirTelaPersonalizacao()" class="text-center text-xs text-slate-600 hover:text-slate-800 py-2.5 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-center gap-1.5 cursor-pointer transition font-medium">
                     <i class="fa-solid fa-palette text-slate-400"></i> Personalização
@@ -213,20 +208,21 @@
                 </button>
             </div>
 
-            <!-- Botão WhatsApp -->
+            <!-- Botão de Enviar WhatsApp -->
             <button onclick="enviarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer mt-1">
                 <i class="fa-brands fa-whatsapp text-xl"></i> Enviar Relatório no WhatsApp
             </button>
 
         </main>
 
+        <!-- Rodapé simples -->
         <footer class="bg-slate-50 p-3 text-center text-xs text-slate-400 border-t border-slate-100">
             Dados salvos localmente no seu dispositivo 📱
         </footer>
     </div>
 
     <!-- TELA DE PERSONALIZAÇÃO -->
-    <div id="telaPersonalizacao" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden hidden flex-col mb-4 border border-slate-200">
+    <div id="telaPersonalizacao" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden hidden flex-col mb-4">
         <header id="headerPersonalizacao" class="bg-teal-700 text-white p-4 flex items-center justify-between transition-colors">
             <button onclick="fecharTelaPersonalizacao()" class="text-white hover:text-slate-200 text-sm flex items-center gap-1 cursor-pointer font-medium">
                 <i class="fa-solid fa-arrow-left"></i> Voltar
@@ -241,11 +237,13 @@
                     Escolha as cores de preferência para personalizar os botões, títulos e fundos do aplicativo:
                 </p>
 
+                <!-- Modos: Padrão vs Personalizado -->
                 <div class="flex bg-slate-200 p-1 rounded-lg text-xs font-semibold">
                     <button id="btnModoPadrao" onclick="alternarModoCor('padrao')" class="w-1/2 py-1.5 rounded-md transition text-slate-700 bg-white shadow-xs">Padrão</button>
                     <button id="btnModoCustom" onclick="alternarModoCor('custom')" class="w-1/2 py-1.5 rounded-md transition text-slate-600 hover:text-slate-800">Personalizado (Gradiente)</button>
                 </div>
 
+                <!-- Modo Padrão -->
                 <div id="painelModoPadrao" class="flex flex-col gap-3 bg-white p-3 rounded-lg border border-slate-300">
                     <span class="text-xs text-slate-500 font-medium">Selecione um Tema:</span>
                     <div class="flex items-center justify-around py-2">
@@ -257,6 +255,7 @@
                     </div>
                 </div>
 
+                <!-- Modo Personalizado (Gradiente) -->
                 <div id="painelModoCustom" class="hidden flex-col gap-3 bg-white p-3 rounded-lg border border-slate-300">
                     <div>
                         <span class="text-xs text-slate-600 font-semibold block mb-1">Arraste/clique na barra para escolher qualquer cor:</span>
@@ -288,8 +287,8 @@
         </main>
     </div>
 
-    <!-- TELA SOBRE E APOIAR -->
-    <div id="telaSobre" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden hidden flex-col mb-4 border border-slate-200">
+    <!-- TELA SOBRE E INFORMAÇÕES DO PIX E CONTATO -->
+    <div id="telaSobre" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden hidden flex-col mb-4">
         <header id="headerSobre" class="bg-teal-700 text-white p-4 flex items-center justify-between transition-colors">
             <button onclick="fecharTelaSobre()" class="text-white hover:text-slate-200 text-sm flex items-center gap-1 cursor-pointer font-medium">
                 <i class="fa-solid fa-arrow-left"></i> Voltar
@@ -299,6 +298,7 @@
         </header>
 
         <main class="p-5 flex flex-col gap-4 bg-white">
+            <!-- Apresentação do Projeto -->
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center flex flex-col gap-2">
                 <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-xl mx-auto mb-1">
                     <i class="fa-solid fa-heart"></i>
@@ -309,7 +309,7 @@
                 </p>
             </div>
 
-            <!-- Pix -->
+            <!-- Card de Apoio com Pix -->
             <div class="bg-teal-50/70 border border-teal-200 rounded-xl p-4 flex flex-col gap-3 text-center">
                 <h4 class="text-xs font-bold text-teal-900 uppercase tracking-wider flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-hand-holding-dollar text-teal-600"></i> Apoie este Projeto
@@ -318,6 +318,7 @@
                     Se este aplicativo tem ajudado no seu dia a dia e você deseja contribuir voluntariamente para a manutenção e novos recursos, fique à vontade para enviar qualquer valor via Pix:
                 </p>
 
+                <!-- Chave Pix -->
                 <div class="bg-white border border-teal-300 rounded-lg p-3 flex flex-col items-center gap-2 shadow-xs">
                     <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Chave Pix (Aleatória)</span>
                     <span id="chavePixTexto" class="font-mono text-xs font-bold text-slate-700 break-all select-all bg-slate-100 px-2 py-1 rounded w-full">
@@ -329,7 +330,7 @@
                 </div>
             </div>
 
-            <!-- E-mail -->
+            <!-- Card de Contato por E-mail -->
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3 text-center">
                 <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-envelope text-teal-600"></i> Dúvidas ou Sugestões?
@@ -429,7 +430,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Principal -->
+    <!-- Script de Lógica -->
     <script>
         const paletasPadrao = {
             teal: { principal: '#0f766e', texto: '#0f766e', fundo: '#f0fdf4' },
@@ -500,6 +501,7 @@
             atualizarInterface();
         }
 
+        // TELA PERSONALIZAÇÃO
         function abrirTelaPersonalizacao() {
             document.getElementById('paginaInicial').classList.add('hidden');
             document.getElementById('paginaInicial').classList.remove('flex');
@@ -514,6 +516,7 @@
             document.getElementById('paginaInicial').classList.add('flex');
         }
 
+        // TELA SOBRE / PIX
         function abrirTelaSobre() {
             document.getElementById('paginaInicial').classList.add('hidden');
             document.getElementById('paginaInicial').classList.remove('flex');
