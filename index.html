@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" style="color-scheme: light !important; background-color: #ffffff !important;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Força o navegador a reconhecer apenas a versão Light do app -->
-    <meta name="color-scheme" content="only light">
+    <!-- Força o navegador e WebView a reconhecer apenas a versão Light do app -->
+    <meta name="color-scheme" content="light">
     <meta name="supported-color-schemes" content="light">
+    <meta name="darkmode" content="off">
     <meta name="theme-color" content="#ffffff">
     
     <title>Meu Campo - Testemunhas de Jeová</title>
@@ -22,10 +23,13 @@
             supported-color-schemes: light !important;
         }
 
-        /* Anti-Inversão via Filtro de Ajuste */
+        /* Anti-Inversão de GPU via Matriz SVG */
         html {
+            filter: url(#disable-dark-mode) !important;
+            -webkit-filter: url(#disable-dark-mode) !important;
             background-color: #ffffff !important;
             color: #0f172a !important;
+            -webkit-text-fill-color: #0f172a !important;
         }
 
         body {
@@ -34,7 +38,7 @@
             color: #0f172a !important;
         }
 
-        /* Isolamento contra substituição do Chrome */
+        /* Isolamento de containers */
         #paginaInicial, #telaPersonalizacao, #telaSobre, modalDia, .bg-white {
             background-color: #ffffff !important;
             background: #ffffff !important;
@@ -45,15 +49,16 @@
             background-color: #f8fafc !important;
         }
 
-        /* Garantia de contraste e visibilidade para textos no modo claro */
-        .text-slate-400 { color: #94a3b8 !important; }
-        .text-slate-500 { color: #64748b !important; }
-        .text-slate-600 { color: #475569 !important; }
-        .text-slate-700 { color: #334155 !important; }
-        .text-slate-800, .text-slate-900 { color: #0f172a !important; }
+        /* Trava de texto e contraste */
+        .text-slate-400 { color: #94a3b8 !important; -webkit-text-fill-color: #94a3b8 !important; }
+        .text-slate-500 { color: #64748b !important; -webkit-text-fill-color: #64748b !important; }
+        .text-slate-600 { color: #475569 !important; -webkit-text-fill-color: #475569 !important; }
+        .text-slate-700 { color: #334155 !important; -webkit-text-fill-color: #334155 !important; }
+        .text-slate-800, .text-slate-900 { color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; }
 
         #totalPub, #totalVid, #totalRev {
             color: #0f172a !important;
+            -webkit-text-fill-color: #0f172a !important;
         }
 
         /* Gradiente da Barra de Personalização */
@@ -67,6 +72,13 @@
     <link rel="manifest" href="manifest.json">
 </head>
 <body class="bg-white text-slate-800 min-h-screen flex flex-col items-center justify-between p-4">
+
+    <!-- SVG Invisível que bloqueia a inversão de cores da GPU do Android -->
+    <svg style="display: none;">
+      <filter id="disable-dark-mode" x="0" y="0" width="9999" height="9999">
+        <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" />
+      </filter>
+    </svg>
 
     <!-- Container Principal do App -->
     <div id="paginaInicial" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col mb-4 border border-slate-200">
