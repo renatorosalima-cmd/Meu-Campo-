@@ -3,11 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Forçar esquema de cores claro no navegador e WebView -->
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    
     <title>Meu Campo - Testemunhas de Jeová</title>
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* Desativa o escurecimento forçado por navegadores e Android */
+        :root {
+            color-scheme: light !important;
+        }
+
         /* Barra de Gradiente de Cores */
         .gradient-bar {
             background: linear-gradient(to right, 
@@ -15,11 +26,17 @@
                 #00ff00 42%, #00ffff 57%, #0000ff 71%, 
                 #8b00ff 85%, #ff0000 100%);
         }
+
+        /* Garante que elementos de entrada mantenham o fundo claro original */
+        input, select, textarea {
+            color-scheme: light !important;
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+        }
     </style> 
     <link rel="manifest" href="manifest.json">
-
 </head>
-<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center justify-between p-4">
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center justify-between p-4" style="color-scheme: light; background-color: #f1f5f9; color: #1e293b;">
 
     <!-- Container Principal do App -->
     <div id="paginaInicial" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col mb-4">
@@ -39,7 +56,7 @@
         </div>
 
         <!-- Corpo do App -->
-        <main class="p-5 flex flex-col gap-5">
+        <main class="p-5 flex flex-col gap-5 bg-white">
 
             <!-- Identificação do Publicador, Congregação, Circuito, Meta e Seletor de Mês/Ano -->
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
@@ -214,7 +231,7 @@
             <div class="w-12"></div>
         </header>
 
-        <main class="p-5 flex flex-col gap-5">
+        <main class="p-5 flex flex-col gap-5 bg-white">
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-4">
                 <p class="text-xs text-slate-600 leading-relaxed">
                     Escolha as cores de preferência para personalizar os botões, títulos e fundos do aplicativo:
@@ -280,7 +297,7 @@
             <div class="w-12"></div>
         </header>
 
-        <main class="p-5 flex flex-col gap-4">
+        <main class="p-5 flex flex-col gap-4 bg-white">
             <!-- Apresentação do Projeto -->
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-center flex flex-col gap-2">
                 <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-xl mx-auto mb-1">
@@ -327,7 +344,7 @@
                 <button onclick="fecharModalDia()" class="text-white/80 hover:text-white cursor-pointer text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <div class="p-5 flex flex-col gap-4 overflow-y-auto">
+            <div class="p-5 flex flex-col gap-4 overflow-y-auto bg-white">
                 <div class="grid grid-cols-2 gap-3 bg-slate-100 p-3 rounded-xl border border-slate-200">
                     <div>
                         <label class="block text-[11px] font-semibold text-slate-500 uppercase mb-1">Horas Totais (Auto)</label>
