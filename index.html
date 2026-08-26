@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR" style="background-color:#ffffff; color-scheme:light only;">
+<html lang="pt-BR" style="background-color:#ffffff; color-scheme:light;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Meta Tags estritas para travar o tema Light no navegador e no WebView do Android -->
-    <meta name="color-scheme" content="light only">
+    <meta name="color-scheme" content="light">
     <meta name="supported-color-schemes" content="light">
     <meta name="theme-color" content="#ffffff">
     <meta name="mobile-web-app-capable" content="yes">
@@ -19,14 +19,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Trava nativa para garantir que o navegador/WebView trate a página estritamente como Light.
-           Isso é aplicado ANTES do Tailwind carregar, evitando o "flash" de fundo escuro. */
+        /* Truque anti-Force-Dark: o algoritmo de escurecimento automático do Android/Chrome
+           reprocessa background-color, mas geralmente NÃO reprocessa background-image.
+           Por isso usamos uma imagem (SVG de 1x1 pixel branco) como fundo real,
+           mantendo background-color apenas como reforço/fallback. */
         :root {
-            color-scheme: light only !important;
+            --bg-branco-forcado: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3Crect width='1' height='1' fill='%23ffffff'/%3E%3C/svg%3E");
+            color-scheme: light !important;
         }
 
         html, body {
             background-color: #ffffff !important;
+            background-image: var(--bg-branco-forcado) !important;
+            background-repeat: repeat !important;
             color: #0f172a !important;
         }
 
@@ -34,19 +39,32 @@
         @media (prefers-color-scheme: dark) {
             html, body {
                 background-color: #ffffff !important;
+                background-image: var(--bg-branco-forcado) !important;
                 color: #0f172a !important;
             }
             input, select, textarea {
                 background-color: #ffffff !important;
+                background-image: var(--bg-branco-forcado) !important;
                 color: #0f172a !important;
+            }
+            #paginaInicial, #telaPersonalizacao, #telaSobre, #modalDia, main {
+                background-color: #ffffff !important;
+                background-image: var(--bg-branco-forcado) !important;
             }
         }
 
         /* Estilização limpa para inputs e selects, mesmo em modo escuro do sistema */
         input, select, textarea {
             background-color: #ffffff !important;
+            background-image: var(--bg-branco-forcado) !important;
             color: #0f172a !important;
-            color-scheme: light only;
+            color-scheme: light;
+        }
+
+        /* Aplica o mesmo truque nos cartões brancos principais do app,
+           que também podem ser alvo do escurecimento automático */
+        #paginaInicial, #telaPersonalizacao, #telaSobre, #modalDia > div, main {
+            background-image: var(--bg-branco-forcado);
         }
 
         /* Gradiente da Barra de Personalização */
@@ -59,7 +77,7 @@
     </style> 
     <link rel="manifest" href="manifest.json">
 </head>
-<body class="bg-white text-slate-800 min-h-screen flex flex-col items-center justify-between p-4" style="background-color:#ffffff; color-scheme:light only;">
+<body class="bg-white text-slate-800 min-h-screen flex flex-col items-center justify-between p-4" style="background-color:#ffffff; color-scheme:light;">
 
     <!-- Container Principal do App -->
     <div id="paginaInicial" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col mb-4 border border-slate-200">
