@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR" style="background-color:#ffffff; color-scheme:light;">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Meta Tags estritas para travar o tema Light no navegador e no WebView do Android -->
+    <!-- Meta Tags estritas para travar o tema Light no navegador -->
     <meta name="color-scheme" content="light">
     <meta name="supported-color-schemes" content="light">
     <meta name="theme-color" content="#ffffff">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
     <title>Meu Campo - Testemunhas de Jeová</title>
     
@@ -19,8 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* Trava nativa para garantir que o navegador/WebView trate a página estritamente como Light.
-           Isso é aplicado ANTES do Tailwind carregar, evitando o "flash" de fundo escuro. */
         :root {
             color-scheme: light !important;
         }
@@ -30,26 +25,18 @@
             color: #0f172a !important;
         }
 
-        /* Bloqueio de renderização do Dark Mode via Force-Color do Android/Chrome */
         @media (prefers-color-scheme: dark) {
-            html, body {
-                background-color: #ffffff !important;
-                color: #0f172a !important;
-            }
-            input, select, textarea {
+            html {
                 background-color: #ffffff !important;
                 color: #0f172a !important;
             }
         }
 
-        /* Estilização limpa para inputs e selects, mesmo em modo escuro do sistema */
-        input, select, textarea {
+        input, select {
             background-color: #ffffff !important;
             color: #0f172a !important;
-            color-scheme: light;
         }
 
-        /* Gradiente da Barra de Personalização */
         .gradient-bar {
             background: linear-gradient(to right, 
                 #ff0000 0%, #ff7f00 14%, #ffff00 28%, 
@@ -59,7 +46,7 @@
     </style> 
     <link rel="manifest" href="manifest.json">
 </head>
-<body class="bg-white text-slate-800 min-h-screen flex flex-col items-center justify-between p-4" style="background-color:#ffffff; color-scheme:light;">
+<body class="bg-white text-slate-800 min-h-screen flex flex-col items-center justify-between p-4">
 
     <!-- Container Principal do App -->
     <div id="paginaInicial" class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col mb-4 border border-slate-200">
@@ -222,10 +209,16 @@
                 </button>
             </div>
 
-            <!-- Botão WhatsApp -->
-            <button onclick="enviarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer mt-1">
-                <i class="fa-brands fa-whatsapp text-xl"></i> Enviar Relatório no WhatsApp
-            </button>
+            <!-- Botões de Envio de Relatório -->
+            <div class="flex flex-col gap-2 mt-1">
+                <button onclick="enviarWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold p-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Enviar Relatório no WhatsApp
+                </button>
+                
+                <button id="btnCopiarHourglass" onclick="copiarParaHourglass()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold p-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-copy text-lg"></i> Copiar Dados para o Hourglass
+                </button>
+            </div>
 
         </main>
 
@@ -928,7 +921,7 @@
             }
         }
 
-        function enviarWhatsApp() {
+        function gerarTextoRelatorio() {
             let nomePublicador = document.getElementById('inputNome').value.trim();
             let congregacao = document.getElementById('inputCongregacao').value.trim();
             let circuito = document.getElementById('inputCircuito').value.trim();
@@ -961,16 +954,35 @@
 
             let estudosAtivos = dadosMes.estudosAtivos || 0;
 
-            let textoMensagem = `*Relatório de Serviço - ${nomeMesFormatado}*\n` +
-                                (cabecalho ? `${cabecalho}\n` : '\n') +
-                                `⏱️ *Horas:* ${horasTexto}\n` +
-                                `📄 *Publicações:* ${totalPub}\n` +
-                                `🎬 *Vídeos:* ${totalVid}\n` +
-                                `🔄 *Revisitas:* ${totalRev}\n` +
-                                `📖 *Estudos Bíblicos Ativos:* ${estudosAtivos}`;
+            return `*Relatório de Serviço - ${nomeMesFormatado}*\n` +
+                   (cabecalho ? `${cabecalho}\n` : '\n') +
+                   `⏱️ *Horas:* ${horasTexto}\n` +
+                   `📄 *Publicações:* ${totalPub}\n` +
+                   `🎬 *Vídeos:* ${totalVid}\n` +
+                   `🔄 *Revisitas:* ${totalRev}\n` +
+                   `📖 *Estudos Bíblicos Ativos:* ${estudosAtivos}`;
+        }
 
+        function enviarWhatsApp() {
+            let textoMensagem = gerarTextoRelatorio();
             let urlWp = `https://wa.me/?text=${encodeURIComponent(textoMensagem)}`;
             window.open(urlWp, '_blank');
+        }
+
+        function copiarParaHourglass() {
+            let textoMensagem = gerarTextoRelatorio();
+            navigator.clipboard.writeText(textoMensagem).then(() => {
+                const btn = document.getElementById('btnCopiarHourglass');
+                btn.innerHTML = `<i class="fa-solid fa-check text-lg"></i> Relatório Copiado!`;
+                btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                btn.classList.add('bg-emerald-600');
+                
+                setTimeout(() => {
+                    btn.innerHTML = `<i class="fa-solid fa-copy text-lg"></i> Copiar Dados para o Hourglass`;
+                    btn.classList.remove('bg-emerald-600');
+                    btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                }, 2500);
+            });
         }
     </script>
 </body>
