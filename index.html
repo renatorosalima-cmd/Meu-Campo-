@@ -57,10 +57,10 @@
             <p id="mesAtualText" class="text-xs text-teal-200 mt-1 uppercase tracking-wider font-semibold"></p>
         </header>
 
-        <!-- Frase Salmo 110:3 (TNM) -->
+        <!-- Banner Salmo 110:3 (TNM) -->
         <div id="bannerFrase" class="bg-teal-50 border-b border-teal-100 p-3 text-center px-6 transition-colors">
             <p id="textoFrase" class="text-xs italic text-teal-900 leading-relaxed font-serif">
-                “Seu povo se oferecerá voluntariamente no dia do seu exército militar. Em esplêndida santidade, do útero da alva, você tem a sua equipe de jovens assim como orvalho.”
+                “Seu povo se apresentará voluntariamente no dia da sua força militar. Em esplêndida santidade, vindos do amanhecer, o senhor recebe o seu exército de jovens como gotas de orvalho.”
             </p>
             <span id="autorFrase" class="text-[10px] font-semibold text-teal-700 block mt-1 uppercase tracking-wider">— Salmo 110:3 (TNM)</span>
         </div>
@@ -458,13 +458,38 @@
             rose: { principal: '#9f1239', texto: '#9f1239', fundo: '#fff1f2' }
         };
 
-        // Textos das Notificações extraídos exclusivamente da Tradução do Novo Mundo (TNM)
+        // 30 Frases de Incentivo Diário extraídas da Tradução do Novo Mundo (TNM)
         const frasesIncentivo = [
-            "Bom dia! 'Seu povo se oferecerá voluntariamente no dia do seu exército militar.' Tenha um ótimo campo hoje! 🌿 (Salmo 110:3)",
+            "Bom dia! 'Seu povo se apresentará voluntariamente no dia da sua força militar.' Tenha um ótimo campo hoje! 🌿 (Salmo 110:3)",
             "Cada esforço no ministério é valioso. 'Seja firme, inabalável, tendo sempre muito o que fazer na obra do Senhor.' ✨ (1 Cor. 15:58)",
-            "Aproveite a manhã para declarar as boas novas! 'E estas boas novas do Reino serão pregadas em toda a terra habitada.' 📖 (Mat. 24:14)",
-            "Que Jeová abençoe seu serviço hoje. 'Não desistamos de fazer o que é bom.' ☀️ (Gál. 6:9)",
-            "Tenha um excelente campo! 'Declarem a glória dele entre as nações, suas obras maravilhosas entre todos os povos.' 🕊️ (Salmo 96:3)"
+            "Aproveite o dia para declarar as boas novas! 'E estas boas novas do Reino serão pregadas em toda a terra habitada.' 📖 (Mat. 24:14)",
+            "Que Jeová abençoe seu serviço hoje. 'Não deixemos de fazer o que é bom.' ☀️ (Gál. 6:9)",
+            "Tenha um excelente campo! 'Declarem a sua glória entre as nações, as suas obras maravilhosas entre todos os povos.' 🕊️ (Salmo 96:3)",
+            "Confie na força de Jeová hoje. 'Tudo posso Naquele que me dá força.' 🛡️ (Fil. 4:13)",
+            "Compartilhe a esperança do Reino! 'Como são bonitos os pés daquele que traz boas novas de algo melhor.' 👣 (Isa. 52:7)",
+            "Mantenha a alegria no serviço. 'A alegria que vem de Jeová é a sua fortaleza.' 😊 (Neem. 8:10)",
+            "Deixe sua luz brilhar no campo. 'Deixem brilhar a sua luz perante os homens.' 💡 (Mat. 5:16)",
+            "Persevere ao pregar hoje. 'Pois Deus não é injusto para se esquecer da sua obra e do amor que vocês mostraram ao nome dele.' ⭐ (Heb. 6:10)",
+            "Seja corajoso no testemunho. 'Seja corajoso e forte... Jeová, seu Deus, está com você por onde quer que você andar.' 🦁 (Jos. 1:9)",
+            "A palavra de Deus transforma vidas. 'A palavra de Deus é viva e exerce poder.' 🗡️ (Heb. 4:12)",
+            "Semeie com generosidade. 'Quem semeia generosamente também colherá generosamente.' 🌾 (2 Cor. 9:6)",
+            "O amor move nosso ministério. 'O amor é paciente e bondoso... O amor nunca acaba.' ❤️ (1 Cor. 13:4, 8)",
+            "Dê o seu melhor a Jeová hoje. 'O que quer que façam, trabalhem nisso de todo o coração, como para Jeová.' 🔨 (Col. 3:23)",
+            "Proclame a paz às pessoas. 'Felizes os que promovem a paz.' 🕊️ (Mat. 5:9)",
+            "Confie no ensino divino. 'Eu, Jeová, sou o seu Deus, Aquele que lhe ensina o que é melhor para você.' 📘 (Isa. 48:17)",
+            "Leve consolo ao território. 'Jeová está perto dos que têm o coração quebrantado.' 🩹 (Salmo 34:18)",
+            "Seja sábio nas conversas. 'Que as suas palavras sejam sempre agradáveis, temperadas com sal.' 🧂 (Col. 4:6)",
+            "Busque primeiro o Reino neste dia! 'Persistam, pois, em buscar primeiro o Reino e a justiça de Deus.' 👑 (Mat. 6:33)",
+            "Compartilhe o nome de Deus. 'Todos os que invocarem o nome de Jeová serão salvos.' 🏷️ (Rom. 10:13)",
+            "Confie no apoio dos anjos no campo. 'Pois ele dará ordens aos seus anjos a seu respeito, para guardá-lo.' 👼 (Salmo 91:11)",
+            "Aproveite o tempo no ministério. 'Usando o seu tempo do melhor modo possível.' ⏳ (Efé. 5:16)",
+            "Faça discípulos com paciência. 'Vão e façam discípulos de pessoas de todas as nações.' 🌎 (Mat. 28:19)",
+            "A paz de Deus guiará seus passos. 'A paz de Deus, que está além de todo entendimento, guardará o seu coração.' 🕊️ (Fil. 4:7)",
+            "Fortaleça o amor pelos irmãos de campo. 'Incentivemo-nos uns aos outros ao amor e às boas obras.' 🤝 (Heb. 10:24)",
+            "Perseverança traz bênçãos! 'A perseverança deve completar a sua obra, para que vocês sejam completos.' 🧱 (Tia. 1:4)",
+            "Transmita consolo com a Bíblia. 'Para que, por meio da nossa perseverança e do consolo das Escrituras, tenhamos esperança.' 📜 (Rom. 15:4)",
+            "Sua dedicação não é em vão! 'O seu trabalho árduo não é em vão no Senhor.' 🏋️‍♂️ (1 Cor. 15:58)",
+            "Que seu dia no campo seja abençoado! 'A bênção de Jeová é o que enriquece, e Ele não acrescenta dor a ela.' 🌟 (Pro. 10:22)"
         ];
 
         const dataRealAtual = new Date();
@@ -501,6 +526,12 @@
         alternarModoCor(modoCor);
         atualizarInterface();
         verificarEstadoNotificacao();
+
+        function obterFraseDoDia() {
+            const diaHoje = new Date().getDate();
+            const indice = Math.min(diaHoje - 1, frasesIncentivo.length - 1);
+            return frasesIncentivo[indice];
+        }
 
         function popularSeletoresData() {
             const selectAno = document.getElementById('selectAno');
@@ -1063,12 +1094,12 @@
         }
 
         async function agendarNotificacaoNativaCapacitor() {
-            const fraseAleatoria = frasesIncentivo[Math.floor(Math.random() * frasesIncentivo.length)];
+            const fraseDoDia = obterFraseDoDia();
             await window.Capacitor.Plugins.LocalNotifications.schedule({
                 notifications: [
                     {
                         title: "Serviço de Campo 🌿",
-                        body: fraseAleatoria,
+                        body: fraseDoDia,
                         id: 101,
                         schedule: {
                             on: { hour: 8, minute: 0 },
@@ -1116,8 +1147,8 @@
 
                 if (h === 8 && m === 0 && ultimoDisparo !== hojeStr) {
                     if (localStorage.getItem('publicador_notificacoes_ativadas') === 'true' && Notification.permission === "granted") {
-                        const frase = frasesIncentivo[Math.floor(Math.random() * frasesIncentivo.length)];
-                        new Notification("Serviço de Campo 🌿", { body: frase });
+                        const fraseDoDia = obterFraseDoDia();
+                        new Notification("Serviço de Campo 🌿", { body: fraseDoDia });
                         localStorage.setItem('publicador_ultimo_disparo', hojeStr);
                     }
                 }
