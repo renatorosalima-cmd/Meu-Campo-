@@ -146,10 +146,12 @@
                         </div>
                         <div>
                             <p class="text-xs text-slate-500 font-medium">Total de Horas no Mês</p>
-                            <h2 id="totalHorasDisplay" class="text-lg font-bold text-slate-800">0h 0min</h2>
+                            <h2 class="text-lg font-bold text-slate-800">
+                                <span id="totalHorasDisplay">0h 0min</span>
+                                <span id="porcentagemMeta" class="text-xs font-semibold ml-1 text-teal-600"></span>
+                            </h2>
                         </div>
                     </div>
-                    <div id="porcentagemMeta" class="text-sm font-bold text-teal-600"></div>
                 </div>
                 <div id="containerBarraMeta" class="hidden w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
                     <div id="barraProgresso" class="bg-teal-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
@@ -199,20 +201,17 @@
                 </div>
             </div>
 
-            <!-- Card de Lembretes Nativos e Incentivo Diário -->
+            <!-- Card de Lembretes Nativos (Limpo e Direto) -->
             <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
                         <i id="iconeNotificacao" class="fa-solid fa-bell text-teal-600"></i>
-                        <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider">Lembrete de Campo</h3>
+                        <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider">Lembrete de Campo (08:00)</h3>
                     </div>
                     <span id="statusNotificacao" class="text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md">Desativado</span>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    Receba um lembrete motivacional com textos da Tradução do Novo Mundo todos os dias às <strong>08:00</strong> para abençoar o seu ministério.
-                </p>
                 <button id="btnAtivarLembrete" onclick="toggleLembreteDiario()" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 rounded-xl text-xs shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-bell-ring"></i> <span id="textoBtnLembrete">Ativar Lembrete Diário (08:00)</span>
+                    <i class="fa-solid fa-bell-ring"></i> <span id="textoBtnLembrete">Ativar Lembrete Diário</span>
                 </button>
             </div>
 
@@ -396,7 +395,7 @@
                     <label class="text-xs font-bold text-slate-600 uppercase">Modalidades (Informe os Minutos)</label>
                     <div class="grid grid-cols-2 gap-2 text-xs">
                         
-                        <!-- Modalidade Casa em Casa com Atalhos Rápido -->
+                        <!-- Modalidade Casa em Casa -->
                         <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1.5">
                             <span class="font-medium text-slate-600">De casa em casa</span>
                             <input type="number" id="modCasa" min="0" placeholder="Minutos" oninput="recalcularTempoModalidades()" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500">
@@ -524,7 +523,7 @@
             "Busque primeiro o Reino neste dia! 'Persistam, pois, em buscar primeiro o Reino e a justiça de Deus.' 👑 (Mat. 6:33)",
             "Compartilhe o nome de Deus. 'Todos os que invocarem o nome de Jeová serão salvos.' 🏷️ (Rom. 10:13)",
             "Confie no apoio dos anjos no campo. 'Pois ele dará ordens aos seus anjos a seu respeito, para guardá-lo.' 👼 (Salmo 91:11)",
-            "Aproveite o tempo no ministério. 'Usando o seu tempo do melhor modo possível.' ⏳ (Efé. 5:16)",
+            "Aproveite o tempo no ministério. 'Usando o seu tempo do melhor modo possible.' ⏳ (Efé. 5:16)",
             "Faça discípulos com paciência. 'Vão e façam discípulos de pessoas de todas as nações.' 🌎 (Mat. 28:19)",
             "A paz de Deus guiará seus passos. 'A paz de Deus, que está além de todo entendimento, guardará o seu coração.' 🕊️ (Fil. 4:7)",
             "Fortaleça o amor pelos irmãos de campo. 'Incentivemo-nos uns aos outros ao amor e às boas obras.' 🤝 (Heb. 10:24)",
@@ -561,7 +560,7 @@
 
         let dadosMes = carregarDadosDoMes(anoMesSelecionado);
 
-        // Lógica Avançada de Cronômetro Resiliente
+        // Lógica de Cronômetro
         let startTime = 0;
         let timerInterval = null;
         let emAndamento = false;
@@ -570,7 +569,6 @@
         atualizarInterface();
         verificarEstadoNotificacao();
 
-        // Registrar Service Worker para PWA (se suportado)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').catch(() => {});
@@ -857,7 +855,7 @@
             if (metaHoras > 0) {
                 containerBarra.classList.remove('hidden');
                 let progresso = Math.min(Math.round(((totalMinutosGerais / 60) / metaHoras) * 100), 100);
-                textoPorcentagem.innerText = `${progresso}%`;
+                textoPorcentagem.innerText = `(${progresso}%)`;
                 barra.style.width = `${progresso}%`;
 
                 if (totalMinutosGerais >= metaHoras * 60) {
@@ -1119,7 +1117,6 @@
                     await window.Capacitor.Plugins.LocalNotifications.cancel({ notifications: [{ id: 101 }] });
                 }
                 atualizarUIIncentivo(false);
-                alert("Lembretes diários desativados.");
             } else {
                 if (window.Capacitor && window.Capacitor.Plugins.LocalNotifications) {
                     const status = await window.Capacitor.Plugins.LocalNotifications.requestPermissions();
@@ -1127,7 +1124,6 @@
                         await agendarNotificacaoNativaCapacitor();
                         localStorage.setItem('publicador_notificacoes_ativadas', 'true');
                         atualizarUIIncentivo(true);
-                        alert("Lembrete diário agendado para as 08:00!");
                     } else {
                         alert("Permissão para enviar notificações foi negada.");
                     }
@@ -1137,7 +1133,6 @@
                             localStorage.setItem('publicador_notificacoes_ativadas', 'true');
                             atualizarUIIncentivo(true);
                             iniciarVerificadorWeb();
-                            alert("Lembrete ativado! O app enviará incentivos diários às 08:00.");
                         } else {
                             alert("Permissão para notificações foi negada nas configurações do navegador.");
                         }
@@ -1180,14 +1175,14 @@
             const c = (modoCor === 'padrao') ? paletasPadrao[temaPadrao] : coresCustom;
 
             if (ativo) {
-                badge.innerText = "Ativo (08:00)";
+                badge.innerText = "Ativo";
                 badge.className = "text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md";
-                textoBtn.innerText = "Desativar Lembretes Diários";
+                textoBtn.innerText = "Desativar Lembrete Diário";
                 btn.style.backgroundColor = "#dc2626";
             } else {
                 badge.innerText = "Desativado";
                 badge.className = "text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md";
-                textoBtn.innerText = "Ativar Lembrete Diário (08:00)";
+                textoBtn.innerText = "Ativar Lembrete Diário";
                 btn.style.backgroundColor = c.principal;
             }
         }
