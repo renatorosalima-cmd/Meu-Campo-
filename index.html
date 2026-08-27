@@ -11,7 +11,7 @@
     
     <title>Meu Campo - Testemunhas de Jeová</title>
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS e FontAwesome -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -57,12 +57,12 @@
             <p id="mesAtualText" class="text-xs text-teal-200 mt-1 uppercase tracking-wider font-semibold"></p>
         </header>
 
-        <!-- Frase Salmo 110:3 -->
+        <!-- Frase Salmo 110:3 (TNM) -->
         <div id="bannerFrase" class="bg-teal-50 border-b border-teal-100 p-3 text-center px-6 transition-colors">
             <p id="textoFrase" class="text-xs italic text-teal-900 leading-relaxed font-serif">
-                “Seu povo se apresentará voluntariamente no dia da sua força militar. Em esplêndida santidade, vindos do amanhecer”
+                “Seu povo se oferecerá voluntariamente no dia do seu exército militar. Em esplêndida santidade, do útero da alva, você tem a sua equipe de jovens assim como orvalho.”
             </p>
-            <span id="autorFrase" class="text-[10px] font-semibold text-teal-700 block mt-1 uppercase tracking-wider">— Salmo 110:3</span>
+            <span id="autorFrase" class="text-[10px] font-semibold text-teal-700 block mt-1 uppercase tracking-wider">— Salmo 110:3 (TNM)</span>
         </div>
 
         <!-- Corpo do App -->
@@ -159,7 +159,7 @@
                         <i class="fa-solid fa-circle-check text-emerald-600"></i>
                         <span>Parabéns, meta concluída!</span>
                     </p>
-                    <span class="text-[10px] font-medium text-emerald-600 block mt-0.5">Mateus 24:14</span>
+                    <span class="text-[10px] font-medium text-emerald-600 block mt-0.5">Mateus 24:14 (TNM)</span>
                 </div>
             </div>
 
@@ -197,6 +197,23 @@
                         <input type="number" id="inputEstudosAtivos" min="0" oninput="salvarEstudosAtivos()" class="w-12 bg-white border border-teal-300 rounded px-1.5 py-0.5 text-center text-xs font-bold text-teal-800 focus:outline-none focus:ring-1 focus:ring-teal-500" value="0">
                     </div>
                 </div>
+            </div>
+
+            <!-- Card de Lembretes Nativos e Incentivo Diário -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i id="iconeNotificacao" class="fa-solid fa-bell text-teal-600"></i>
+                        <h3 class="text-xs font-bold text-slate-600 uppercase tracking-wider">Lembrete de Campo</h3>
+                    </div>
+                    <span id="statusNotificacao" class="text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md">Desativado</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    Receba um lembrete motivacional com textos da Tradução do Novo Mundo todos os dias às <strong>08:00</strong> para abençoar o seu ministério.
+                </p>
+                <button id="btnAtivarLembrete" onclick="toggleLembreteDiario()" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 rounded-xl text-xs shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-bell-ring"></i> <span id="textoBtnLembrete">Ativar Lembrete Diário (08:00)</span>
+                </button>
             </div>
 
             <!-- Botões Inferiores -->
@@ -350,7 +367,7 @@
             </div>
 
             <button onclick="fecharTelaSobre()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold p-3 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer text-sm">
-                Voltar ao Inicio
+                Voltar ao Início
             </button>
         </main>
     </div>
@@ -441,6 +458,15 @@
             rose: { principal: '#9f1239', texto: '#9f1239', fundo: '#fff1f2' }
         };
 
+        // Textos das Notificações extraídos exclusivamente da Tradução do Novo Mundo (TNM)
+        const frasesIncentivo = [
+            "Bom dia! 'Seu povo se oferecerá voluntariamente no dia do seu exército militar.' Tenha um ótimo campo hoje! 🌿 (Salmo 110:3)",
+            "Cada esforço no ministério é valioso. 'Seja firme, inabalável, tendo sempre muito o que fazer na obra do Senhor.' ✨ (1 Cor. 15:58)",
+            "Aproveite a manhã para declarar as boas novas! 'E estas boas novas do Reino serão pregadas em toda a terra habitada.' 📖 (Mat. 24:14)",
+            "Que Jeová abençoe seu serviço hoje. 'Não desistamos de fazer o que é bom.' ☀️ (Gál. 6:9)",
+            "Tenha um excelente campo! 'Declarem a glória dele entre as nações, suas obras maravilhosas entre todos os povos.' 🕊️ (Salmo 96:3)"
+        ];
+
         const dataRealAtual = new Date();
         const anoAtualReal = dataRealAtual.getFullYear();
         const mesRealIndex = dataRealAtual.getMonth();
@@ -474,6 +500,7 @@
 
         alternarModoCor(modoCor);
         atualizarInterface();
+        verificarEstadoNotificacao();
 
         function popularSeletoresData() {
             const selectAno = document.getElementById('selectAno');
@@ -668,6 +695,7 @@
             document.getElementById('iconeVid').style.color = c.principal;
             document.getElementById('iconeRev').style.color = c.principal;
             document.getElementById('iconeEstudos').style.color = c.principal;
+            document.getElementById('iconeNotificacao').style.color = c.principal;
 
             const boxEstudos = document.getElementById('boxEstudos');
             boxEstudos.style.backgroundColor = c.fundo;
@@ -675,6 +703,11 @@
 
             document.getElementById('modalHeader').style.backgroundColor = c.principal;
             document.getElementById('btnSalvarDia').style.backgroundColor = c.principal;
+
+            const estaAtivado = localStorage.getItem('publicador_notificacoes_ativadas') === 'true';
+            if (!estaAtivado) {
+                document.getElementById('btnAtivarLembrete').style.backgroundColor = c.principal;
+            }
         }
 
         function carregarDadosDoMes(mesAno) {
@@ -983,6 +1016,112 @@
                     btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
                 }, 2500);
             });
+        }
+
+        /* --- Lógica dos Lembretes e Notificações Diárias --- */
+
+        async function toggleLembreteDiario() {
+            const estaAtivado = localStorage.getItem('publicador_notificacoes_ativadas') === 'true';
+
+            if (estaAtivado) {
+                // Desativar
+                localStorage.setItem('publicador_notificacoes_ativadas', 'false');
+                if (window.Capacitor && window.Capacitor.Plugins.LocalNotifications) {
+                    await window.Capacitor.Plugins.LocalNotifications.cancel({ notifications: [{ id: 101 }] });
+                }
+                atualizarUIIncentivo(false);
+                alert("Lembretes diários desativados.");
+            } else {
+                // Ativar
+                if (window.Capacitor && window.Capacitor.Plugins.LocalNotifications) {
+                    // Modo App Nativo (Play Store via Capacitor)
+                    const status = await window.Capacitor.Plugins.LocalNotifications.requestPermissions();
+                    if (status.display === 'granted') {
+                        await agendarNotificacaoNativaCapacitor();
+                        localStorage.setItem('publicador_notificacoes_ativadas', 'true');
+                        atualizarUIIncentivo(true);
+                        alert("Lembrete diário agendado para as 08:00!");
+                    } else {
+                        alert("Permissão para enviar notificações foi negada.");
+                    }
+                } else if ("Notification" in window) {
+                    // Modo Web App/PWA Navegador
+                    Notification.requestPermission().then((perm) => {
+                        if (perm === "granted") {
+                            localStorage.setItem('publicador_notificacoes_ativadas', 'true');
+                            atualizarUIIncentivo(true);
+                            iniciarVerificadorWeb();
+                            alert("Lembrete ativado! O app enviará incentivos diários às 08:00.");
+                        } else {
+                            alert("Permissão para notificações foi negada nas configurações do navegador.");
+                        }
+                    });
+                } else {
+                    alert("Este dispositivo ou navegador não suporta notificações.");
+                }
+            }
+        }
+
+        async function agendarNotificacaoNativaCapacitor() {
+            const fraseAleatoria = frasesIncentivo[Math.floor(Math.random() * frasesIncentivo.length)];
+            await window.Capacitor.Plugins.LocalNotifications.schedule({
+                notifications: [
+                    {
+                        title: "Serviço de Campo 🌿",
+                        body: fraseAleatoria,
+                        id: 101,
+                        schedule: {
+                            on: { hour: 8, minute: 0 },
+                            repeats: true
+                        }
+                    }
+                ]
+            });
+        }
+
+        function verificarEstadoNotificacao() {
+            const estaAtivado = localStorage.getItem('publicador_notificacoes_ativadas') === 'true';
+            atualizarUIIncentivo(estaAtivado);
+            if (estaAtivado && (!window.Capacitor || !window.Capacitor.Plugins.LocalNotifications)) {
+                iniciarVerificadorWeb();
+            }
+        }
+
+        function atualizarUIIncentivo(ativo) {
+            const badge = document.getElementById('statusNotificacao');
+            const btn = document.getElementById('btnAtivarLembrete');
+            const textoBtn = document.getElementById('textoBtnLembrete');
+            const c = (modoCor === 'padrao') ? paletasPadrao[temaPadrao] : coresCustom;
+
+            if (ativo) {
+                badge.innerText = "Ativo (08:00)";
+                badge.className = "text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md";
+                textoBtn.innerText = "Desativar Lembretes Diários";
+                btn.style.backgroundColor = "#dc2626"; // Botão vermelho para desativar
+            } else {
+                badge.innerText = "Desativado";
+                badge.className = "text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md";
+                textoBtn.innerText = "Ativar Lembrete Diário (08:00)";
+                btn.style.backgroundColor = c.principal;
+            }
+        }
+
+        function iniciarVerificadorWeb() {
+            setInterval(() => {
+                const agora = new Date();
+                const h = agora.getHours();
+                const m = agora.getMinutes();
+                const hojeStr = agora.toDateString();
+                const ultimoDisparo = localStorage.getItem('publicador_ultimo_disparo');
+
+                if (h === 8 && m === 0 && ultimoDisparo !== hojeStr) {
+                    if (localStorage.getItem('publicador_notificacoes_ativadas') === 'true' && Notification.permission === "granted") {
+                        const frase = frasesIncentivo[Math.floor(Math.random() * frasesIncentivo.length)];
+                        new Notification("Serviço de Campo 🌿", { body: frase });
+                        localStorage.setItem('publicador_ultimo_disparo', hojeStr);
+                    }
+                }
+            }, 60000);
         }
     </script>
 </body>
