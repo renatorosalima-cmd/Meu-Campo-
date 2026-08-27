@@ -395,30 +395,73 @@
                 <div class="flex flex-col gap-2">
                     <label class="text-xs font-bold text-slate-600 uppercase">Modalidades (Informe os Minutos)</label>
                     <div class="grid grid-cols-2 gap-2 text-xs">
-                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1">
+                        
+                        <!-- Modalidade Casa em Casa com Atalhos Rápido -->
+                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1.5">
                             <span class="font-medium text-slate-600">De casa em casa</span>
                             <input type="number" id="modCasa" min="0" placeholder="Minutos" oninput="recalcularTempoModalidades()" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500">
+                            <div class="flex gap-1">
+                                <button type="button" onclick="adicionarMinutos('modCasa', 15)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+15m</button>
+                                <button type="button" onclick="adicionarMinutos('modCasa', 30)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+30m</button>
+                                <button type="button" onclick="adicionarMinutos('modCasa', 60)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+1h</button>
+                            </div>
                         </div>
-                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1">
+
+                        <!-- Modalidade Carrinho -->
+                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1.5">
                             <span class="font-medium text-slate-600">Carrinho</span>
                             <input type="number" id="modCarrinho" min="0" placeholder="Minutos" oninput="recalcularTempoModalidades()" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500">
+                            <div class="flex gap-1">
+                                <button type="button" onclick="adicionarMinutos('modCarrinho', 15)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+15m</button>
+                                <button type="button" onclick="adicionarMinutos('modCarrinho', 30)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+30m</button>
+                                <button type="button" onclick="adicionarMinutos('modCarrinho', 60)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+1h</button>
+                            </div>
                         </div>
-                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1">
+
+                        <!-- Modalidade Display -->
+                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1.5">
                             <span class="font-medium text-slate-600">Display</span>
                             <input type="number" id="modDisplay" min="0" placeholder="Minutos" oninput="recalcularTempoModalidades()" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500">
+                            <div class="flex gap-1">
+                                <button type="button" onclick="adicionarMinutos('modDisplay', 15)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+15m</button>
+                                <button type="button" onclick="adicionarMinutos('modDisplay', 30)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+30m</button>
+                                <button type="button" onclick="adicionarMinutos('modDisplay', 60)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+1h</button>
+                            </div>
                         </div>
-                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1">
+
+                        <!-- Modalidade Cartas -->
+                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1.5">
                             <span class="font-medium text-slate-600">Cartas</span>
                             <input type="number" id="modCartas" min="0" placeholder="Minutos" oninput="recalcularTempoModalidades()" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500">
+                            <div class="flex gap-1">
+                                <button type="button" onclick="adicionarMinutos('modCartas', 15)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+15m</button>
+                                <button type="button" onclick="adicionarMinutos('modCartas', 30)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+30m</button>
+                                <button type="button" onclick="adicionarMinutos('modCartas', 60)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+1h</button>
+                            </div>
                         </div>
-                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1">
+
+                        <!-- Modalidade Estudo -->
+                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1.5">
                             <span class="font-medium text-slate-600">Estudo</span>
                             <input type="number" id="modEstudo" min="0" placeholder="Minutos" oninput="recalcularTempoModalidades()" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500">
+                            <div class="flex gap-1">
+                                <button type="button" onclick="adicionarMinutos('modEstudo', 15)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+15m</button>
+                                <button type="button" onclick="adicionarMinutos('modEstudo', 30)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+30m</button>
+                                <button type="button" onclick="adicionarMinutos('modEstudo', 60)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+1h</button>
+                            </div>
                         </div>
-                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1">
+
+                        <!-- Modalidade Outros -->
+                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex flex-col gap-1.5">
                             <span class="font-medium text-slate-600">Outros</span>
                             <input type="number" id="modOutros" min="0" placeholder="Minutos" oninput="recalcularTempoModalidades()" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-xs focus:ring-1 focus:ring-teal-500">
+                            <div class="flex gap-1">
+                                <button type="button" onclick="adicionarMinutos('modOutros', 15)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+15m</button>
+                                <button type="button" onclick="adicionarMinutos('modOutros', 30)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+30m</button>
+                                <button type="button" onclick="adicionarMinutos('modOutros', 60)" class="bg-slate-200 hover:bg-slate-300 text-[10px] font-semibold px-1.5 py-0.5 rounded text-slate-700 flex-1">+1h</button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -458,7 +501,6 @@
             rose: { principal: '#9f1239', texto: '#9f1239', fundo: '#fff1f2' }
         };
 
-        // 30 Frases de Incentivo Diário extraídas da Tradução do Novo Mundo (TNM)
         const frasesIncentivo = [
             "Bom dia! 'Seu povo se apresentará voluntariamente no dia da sua força militar.' Tenha um ótimo campo hoje! 🌿 (Salmo 110:3)",
             "Cada esforço no ministério é valioso. 'Seja firme, inabalável, tendo sempre muito o que fazer na obra do Senhor.' ✨ (1 Cor. 15:58)",
@@ -519,13 +561,21 @@
 
         let dadosMes = carregarDadosDoMes(anoMesSelecionado);
 
-        let segundosCronometro = 0;
+        // Lógica Avançada de Cronômetro Resiliente
+        let startTime = 0;
         let timerInterval = null;
         let emAndamento = false;
 
         alternarModoCor(modoCor);
         atualizarInterface();
         verificarEstadoNotificacao();
+
+        // Registrar Service Worker para PWA (se suportado)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
 
         function obterFraseDoDia() {
             const diaHoje = new Date().getDate();
@@ -886,6 +936,13 @@
             document.getElementById('modalDia').classList.remove('hidden');
         }
 
+        function adicionarMinutos(inputId, quantidade) {
+            const input = document.getElementById(inputId);
+            let valAtual = parseInt(input.value) || 0;
+            input.value = valAtual + quantidade;
+            recalcularTempoModalidades();
+        }
+
         function recalcularTempoModalidades() {
             let casa = parseInt(document.getElementById('modCasa').value) || 0;
             let carrinho = parseInt(document.getElementById('modCarrinho').value) || 0;
@@ -942,15 +999,16 @@
 
             if (!emAndamento) {
                 emAndamento = true;
+                startTime = Date.now();
                 icone.className = "fa-solid fa-pause";
-                texto.innerText = "Pausar";
+                texto.innerText = "Pausar e Salvar";
                 btn.style.backgroundColor = '#d97706';
 
                 timerInterval = setInterval(() => {
-                    segundosCronometro++;
-                    let h = Math.floor(segundosCronometro / 3600).toString().padStart(2, '0');
-                    let m = Math.floor((segundosCronometro % 3600) / 60).toString().padStart(2, '0');
-                    let s = (segundosCronometro % 60).toString().padStart(2, '0');
+                    let decorridoSeg = Math.floor((Date.now() - startTime) / 1000);
+                    let h = Math.floor(decorridoSeg / 3600).toString().padStart(2, '0');
+                    let m = Math.floor((decorridoSeg % 3600) / 60).toString().padStart(2, '0');
+                    let s = (decorridoSeg % 60).toString().padStart(2, '0');
                     document.getElementById('cronometroDisplay').innerText = `${h}:${m}:${s}`;
                 }, 1000);
             } else {
@@ -962,7 +1020,9 @@
                 const c = (modoCor === 'padrao') ? paletasPadrao[temaPadrao] : coresCustom;
                 btn.style.backgroundColor = c.principal;
 
-                let minutosTrabalhados = Math.round(segundosCronometro / 60);
+                let decorridoSeg = Math.floor((Date.now() - startTime) / 1000);
+                let minutosTrabalhados = Math.round(decorridoSeg / 60);
+
                 if (minutosTrabalhados > 0) {
                     let hojeStr = String(dataRealAtual.getDate());
                     let mesRealString = `${anoAtualReal}-${mesRealStr}`;
@@ -980,7 +1040,6 @@
                         alert(`Cronômetro finalizado (${minutosTrabalhados} min), mas você está visualizando um mês/ano diferente do atual.`);
                     }
                 }
-                segundosCronometro = 0;
                 document.getElementById('cronometroDisplay').innerText = "00:00:00";
             }
         }
@@ -1055,7 +1114,6 @@
             const estaAtivado = localStorage.getItem('publicador_notificacoes_ativadas') === 'true';
 
             if (estaAtivado) {
-                // Desativar
                 localStorage.setItem('publicador_notificacoes_ativadas', 'false');
                 if (window.Capacitor && window.Capacitor.Plugins.LocalNotifications) {
                     await window.Capacitor.Plugins.LocalNotifications.cancel({ notifications: [{ id: 101 }] });
@@ -1063,9 +1121,7 @@
                 atualizarUIIncentivo(false);
                 alert("Lembretes diários desativados.");
             } else {
-                // Ativar
                 if (window.Capacitor && window.Capacitor.Plugins.LocalNotifications) {
-                    // Modo App Nativo (Play Store via Capacitor)
                     const status = await window.Capacitor.Plugins.LocalNotifications.requestPermissions();
                     if (status.display === 'granted') {
                         await agendarNotificacaoNativaCapacitor();
@@ -1076,7 +1132,6 @@
                         alert("Permissão para enviar notificações foi negada.");
                     }
                 } else if ("Notification" in window) {
-                    // Modo Web App/PWA Navegador
                     Notification.requestPermission().then((perm) => {
                         if (perm === "granted") {
                             localStorage.setItem('publicador_notificacoes_ativadas', 'true');
@@ -1128,7 +1183,7 @@
                 badge.innerText = "Ativo (08:00)";
                 badge.className = "text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md";
                 textoBtn.innerText = "Desativar Lembretes Diários";
-                btn.style.backgroundColor = "#dc2626"; // Botão vermelho para desativar
+                btn.style.backgroundColor = "#dc2626";
             } else {
                 badge.innerText = "Desativado";
                 badge.className = "text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md";
